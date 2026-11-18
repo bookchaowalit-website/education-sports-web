@@ -1,13 +1,15 @@
 # Design direction — Training Board
 
-The product borrows from a quiet athletics scoreboard and a coach's clipboard:
-deep navy field, chalk-white type, safety orange markers, and large time
-blocks. It should feel ready for a session, not like a wellness marketing
-landing page.
+Four self-authored sample sessions. Since 2026-11-19 the site uses the shared **Reader shell** (see
+`READER.md`): `app/reader-shell.css`, `components/reader-shell.tsx` and `tests/reader-shell.test.tsx` are
+copied byte for byte from content-techblog-web. Geist via `next/font` (variable on `<html>`), `--rs-*` tokens
+in light and dark; no site colour tokens remain.
 
-- Palette: navy `#101a2b`, chalk `#f2f0e8`, orange `#e87532`, blue `#5b83a6`.
-- Typography: condensed display voice for times; humanist sans for instructions.
-- Structure: session queue on the left, selected workout timeline on the right.
-- Interaction: a session can be queued and removed; selection never loses place.
-- Responsive rule: queue becomes a top strip and timeline becomes stacked blocks.
-- Motion: timeline blocks reveal from the start line when a session is selected.
+- Structure: one h1 and lede, focus chips (`aria-pressed`) with counts, a result count and a queue status line
+  (`role="status"`), then every session as a card: id, focus, intensity and length, its blocks as a small
+  timeline (minutes, a bar for its share of the session, label, detail), and a Queue button (`aria-pressed`,
+  "Queued ✓" on a tinted fill, so queued differs from hover).
+- The queue starts empty and lives in this page view only; no fake date or week is shown.
+- Floor: text ≥ 12px, controls ≥ 44px, 4.5:1 text contrast, forced colours, no horizontal scroll at 320px,
+  footer link back to https://bookchaowalit.com/.
+- Honesty: demonstration content; not medical or coaching advice (footer note at full size).
