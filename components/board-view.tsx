@@ -37,7 +37,7 @@ export function BoardView() {
             <ResultCount shown={visible.length} total={SESSIONS.length} noun="session" filter={focus === "all" ? undefined : `“${focus}”`} />
             <p className="rs-count" role="status">{queued.length === 0 ? "Nothing queued yet: press Queue session on a plan you want this week." : `${queued.length} queued for this visit (not saved)`}</p>
           </div>
-          <ul className="rs-list session-grid" data-layout="cards">
+          <ul className="rs-list session-grid" role="list" data-layout="cards">
             {visible.map((session) => {
               const isQueued = queued.includes(session.id);
               return (
