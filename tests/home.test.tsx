@@ -25,6 +25,17 @@ describe("home page (server render)", () => {
   });
 });
 
+describe("list semantics in Safari/VoiceOver", () => {
+  // Safari drops list semantics from list-style: none lists unless role="list" is set.
+  it("keeps the session blocks and the focus filter as lists", () => {
+    const html = renderToString(<Home />);
+    const blocks = html.match(/<ol class="session-blocks"[^>]*>/g) ?? [];
+    expect(blocks.length).toBeGreaterThan(0);
+    for (const tag of blocks) expect(tag).toContain('role="list"');
+    expect(html).toMatch(/<ul class="site-chips" role="list" aria-label="Filter by focus">/);
+  });
+});
+
 describe("home page (mounted)", () => {
   let root: Root;
   let host: HTMLDivElement;

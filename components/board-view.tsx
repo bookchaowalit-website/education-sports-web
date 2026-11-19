@@ -25,7 +25,7 @@ export function BoardView() {
         <section aria-labelledby="sessions">
           <div className="rs-section-head"><h2 id="sessions">Session library</h2></div>
           <div className="rs-toolbar">
-            <ul className="site-chips" aria-label="Filter by focus">
+            <ul className="site-chips" role="list" aria-label="Filter by focus">
               {FOCUSES.map((item) => (
                 <li key={item}>
                   <button type="button" className="rs-chip" aria-pressed={focus === item} onClick={() => setFocus(item)}>
@@ -45,7 +45,8 @@ export function BoardView() {
                   <article className="rs-entry">
                     <h3>{session.name}</h3>
                     <p className="rs-entry-meta">{session.id} · {session.focus} · {session.intensity} · {session.duration} min</p>
-                    <ol className="session-blocks" aria-label={`${session.name} blocks`}>
+                    {/* role="list": these lists set list-style: none, which makes Safari drop their list semantics for VoiceOver. */}
+                    <ol className="session-blocks" role="list" aria-label={`${session.name} blocks`}>
                       {session.blocks.map((block) => (
                         <li key={block.label}>
                           <span className="session-min">{block.minutes} min</span>
