@@ -13,7 +13,8 @@ html, body { margin: 0; background: var(--rs-bg); }
 .session-bar span { display: block; height: 100%; border-radius: inherit; background: var(--rs-accent); }
 .session-blocks strong { font-size: 15px; font-weight: 600; }
 .session-blocks p { margin: 0; color: var(--rs-muted); font-size: 15px; line-height: 1.5; }
-.session-queue { order: 6; justify-self: start; margin: 8px 0 0 -8px; }
+/* position: relative anchors the visually hidden session name inside the button. */
+.session-queue { position: relative; order: 6; justify-self: start; margin: 8px 0 0 -8px; }
 .session-queue[aria-pressed="true"] { background: var(--rs-tag-bg); color: var(--rs-fg); font-weight: 600; }
 @media (forced-colors: active) {
   .session-bar { border: 1px solid CanvasText; }

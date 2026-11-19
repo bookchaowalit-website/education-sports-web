@@ -59,6 +59,8 @@ export function BoardView() {
                     </ol>
                     <button type="button" className="rs-plain session-queue" aria-pressed={isQueued} onClick={() => setQueued((current) => toggleQueued(current, session.id))}>
                       {isQueued ? "Queued ✓" : "Queue session"}
+                      {/* Four cards share the visible label: the session name makes each button's name unique. */}
+                      <span className="rs-sr">: {session.name}</span>
                     </button>
                   </article>
                 </li>

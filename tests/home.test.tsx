@@ -57,6 +57,18 @@ describe("home page (mounted)", () => {
     expect(host.querySelectorAll("[role='status']")[1].textContent).toBe("1 queued for this visit (not saved)");
   });
 
+  it("names each queue button after its session, so four of them are not all \"Queue session\"", () => {
+    const cards = [...host.querySelectorAll(".rs-entry")];
+    const named = cards.map((card) => card.querySelector(".session-queue")!.textContent);
+    const titles = cards.map((card) => card.querySelector("h3")!.textContent);
+    expect(named).toEqual(titles.map((t) => `Queue session: ${t}`));
+    expect(new Set(named).size).toBe(cards.length);
+    press(cards[0].querySelector(".session-queue")!);
+    expect(cards[0].querySelector(".session-queue")!.textContent).toBe(`Queued ✓: ${titles[0]}`);
+    // The session name is for assistive tech; the visible label stays short.
+    expect(cards[0].querySelector(".session-queue .rs-sr")!.textContent).toBe(`: ${titles[0]}`);
+  });
+
   it("draws each block bar as its share of the session", () => {
     const bar = host.querySelector<HTMLElement>(".session-bar span")!;
     expect(bar.style.width).toBe(`${(8 / 42) * 100}%`);
