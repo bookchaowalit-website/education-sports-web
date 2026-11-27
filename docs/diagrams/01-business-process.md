@@ -8,22 +8,22 @@ Last reviewed: 2026-11-28 · commit `ff8e2e3`
 
 ```mermaid
 flowchart TD
-  PUSH["push or PR to main"] --> CI["GitHub Actions: shared ci-node + shared security scan"]
-  PUSH -.->|"no Git link on the Vercel project, per PRODUCT.md"| LAG["live site lags main until a manual Vercel CLI deploy"]
-  LAG --> PAGE["GET / : BoardView, focus = all, queue empty"]
-  PAGE --> FOCUS["visitor picks a focus chip: sessionsFor(focus)"]
-  FOCUS --> CARDS["every matching session renders as a card with timed blocks"]
+  PR["push or PR to main"] --> CI["GitHub Actions: shared ci-node + shared security scan (ci.yml triggers: push and PR)"]
+  MAIN["push to main"] -.->|"PRODUCT.md 2026-10-23: no Git link, deploy by Vercel CLI only, a push does not deploy; current state [ต้องยืนยัน]"| PROD["production may lag main until a manual Vercel CLI deploy"]
+  PAGE["GET / : BoardView, focus = all, queue empty"] --> CARDS["all 4 session cards shown at once, each with Queue session and timed blocks"]
+  PAGE -->|"optional"| FOCUS["visitor picks a focus chip: sessionsFor(focus) changes which cards show"]
+  FOCUS --> CARDS
   CARDS --> BAR["each block shows minutes and a bar = blockShare of the session duration"]
   CARDS --> QUEUE["Queue session toggles the id in queued (toggleQueued)"]
   QUEUE --> COUNT["status line: N queued for this visit (not saved)"]
   COUNT --> LOST["reload or leave: queue is lost"]
   PAGE -.->|"runtime error, only if NEXT_PUBLIC_SENTRY_DSN set"| SENTRY["Sentry, errors only, scrubEvent strips request, user, query strings"]
-  PAGE --> REDIR["GET /more-projects: 308 to bookchaowalit.com"]
+  DIRECT["separate request: GET /more-projects (old URL)"] --> REDIR["308 to bookchaowalit.com"]
 ```
 
 Sources: `app/page.tsx`, `components/board-view.tsx`, `lib/sports.ts`, `lib/sentry.ts`, `next.config.ts`, `PRODUCT.md`
 
-ข้อเท็จจริงจากโค้ด: ไม่มี network call ของตัวเอง ไม่เก็บข้อมูล. `components/board-view.tsx` แสดงทุก session ที่ผ่านตัวกรองเป็นการ์ด และไม่เรียก `pickSelected` ต่างจาก PRODUCT.md ที่เล่าว่า "เปิด session ที่เลือก". [ต้องยืนยัน] สถานะ deploy ปัจจุบัน (PRODUCT.md บันทึกเมื่อ 2026-10-23).
+ข้อเท็จจริงจากโค้ด: ไม่มี network call ของตัวเอง ไม่เก็บข้อมูล (ยกเว้นรายงานข้อผิดพลาดไป Sentry); ปุ่ม More projects ใน footer ลิงก์ตรงไป bookchaowalit.com ไม่ผ่าน `/more-projects`. `components/board-view.tsx` แสดงทุก session ที่ผ่านตัวกรองเป็นการ์ด และไม่เรียก `pickSelected` ต่างจาก PRODUCT.md ที่เล่าว่า "เปิด session ที่เลือก". [ต้องยืนยัน] สถานะ deploy ปัจจุบัน (PRODUCT.md บันทึกเมื่อ 2026-10-23).
 
 ## To-Be (PRODUCT.md §Live URL and deploy state)
 
