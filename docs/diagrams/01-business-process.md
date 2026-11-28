@@ -45,4 +45,4 @@ Sources: `PRODUCT.md` (owner action D9 done, verified 2026-11-28 via Vercel API)
 
 ## Open questions
 
-- production ตาม `main` อยู่หรือไม่ (PRODUCT.md บันทึก deploy ล่าสุด 2026-10-08)
+- ไม่มีคำถามค้างเรื่อง deploy: production = ff8e2e3 via Vercel Git; main HEAD bc61860 is ahead only by docs/ commits (ตรวจกับ Vercel API 2026-11-28)
